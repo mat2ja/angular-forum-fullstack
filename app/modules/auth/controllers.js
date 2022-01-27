@@ -18,7 +18,14 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const { username, password, name, email } = req.body;
-    const user = await Methods.addUser({ username, password, name, email });
+    const created_at = new Date();
+    const user = await Methods.addUser({
+      username,
+      password,
+      name,
+      email,
+      created_at,
+    });
     const token = await Methods.storeToken(user);
 
     delete user.password;
@@ -30,8 +37,14 @@ const register = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
-  res.send({ message: 'logged out' });
+const logout = async (req, res) => {
+  try {
+    console.log(req.user, req.token);
+    await Methods.logoutUser(req.user._id, req.token);
+    res.send({ message: 'Logged out' });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
 };
 
 module.exports = {

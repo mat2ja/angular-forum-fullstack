@@ -18,6 +18,24 @@ const addUser = async (credentials) => {
   }
 };
 
+const logoutUser = async (userId, token) => {
+  try {
+    await Users.updateOne(
+      { _id: ObjectId(userId) },
+      {
+        $pull: {
+          tokens: { $in: [token] },
+        },
+      }
+    );
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    throw new Error('Error logging out user');
+  }
+};
+
 const hashPassword = async (password) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   return hashedPassword;
@@ -56,6 +74,7 @@ const storeToken = async (user) => {
 
 module.exports = {
   addUser,
+  logoutUser,
   hashPassword,
   checkHashedPassword,
   generateAuthToken,

@@ -3,6 +3,7 @@ const { checkHashedPassword } = require('../auth/methods');
 const { ObjectId } = require('mongodb');
 
 const Users = db.collection('users');
+const Posts = db.collection('posts');
 
 const findById = async (id) => {
   try {
@@ -30,6 +31,15 @@ const findByCredentials = async ({ username, password }) => {
   return user;
 };
 
+const getUserPosts = async (userId) => {
+  try {
+    const posts = await Posts.find({ userId: ObjectId(userId) }).toArray();
+    return posts;
+  } catch (err) {
+    throw new Error('Error fetching posts');
+  }
+};
+
 const listUsers = async () => {
   try {
     const users = await Users.find().toArray();
@@ -43,5 +53,6 @@ const listUsers = async () => {
 module.exports = {
   findById,
   findByCredentials,
+  getUserPosts,
   listUsers,
 };
