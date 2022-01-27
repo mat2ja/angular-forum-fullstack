@@ -21,10 +21,13 @@ const addPost = async (postData) => {
   }
 };
 
-const editPost = async (postId, postData) => {
+const editPost = async (postId, postData, userId) => {
   try {
     const post = await Posts.updateOne(
-      { _id: ObjectId(postId) },
+      {
+        _id: ObjectId(postId),
+        userId: ObjectId(userId),
+      },
       { $set: postData }
     );
     return post;
@@ -33,10 +36,11 @@ const editPost = async (postId, postData) => {
   }
 };
 
-const deletePost = async (postId) => {
+const deletePost = async (postId, userId) => {
   try {
     const deletedPost = await Posts.deleteOne({
       _id: ObjectId(postId),
+      userId: ObjectId(userId),
     });
     return deletedPost;
   } catch (err) {

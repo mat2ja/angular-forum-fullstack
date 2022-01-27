@@ -30,7 +30,11 @@ const addNewPost = async (req, res) => {
 const editPost = async (req, res) => {
   try {
     const { postId, comment } = req.body;
-    const updatedPost = await Methods.editPost(postId, { comment });
+    const updatedPost = await Methods.editPost(
+      postId,
+      { comment },
+      req.user._id
+    );
     if (!updatedPost) {
       return res.status(404).send({ error: 'Post not found' });
     }
@@ -43,7 +47,7 @@ const editPost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const deletedPost = await Methods.deletePost(postId);
+    const deletedPost = await Methods.deletePost(postId, req.user._id);
     if (!deletedPost) {
       return res.status(404).send({ error: 'Post not found' });
     }
