@@ -6,8 +6,6 @@ module.exports.getCurrentUser = async (req, res) => {
     if (!user) {
       return res.status(404).send({ error: 'User not found' });
     }
-    delete user.tokens;
-    delete user.password;
 
     if (req.query.posts == 'true') {
       const posts = await Methods.getUserPosts(user._id);
@@ -34,10 +32,6 @@ module.exports.getCurrentUserPosts = async (req, res) => {
 module.exports.getAllUsers = async (req, res) => {
   try {
     const users = await Methods.listUsers();
-    users.forEach((user) => {
-      delete user.tokens;
-      delete user.password;
-    });
     res.send(users);
   } catch (err) {
     res.status(500).send({ error: err.message });

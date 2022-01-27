@@ -2,7 +2,8 @@ const Methods = require('./methods.js');
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Methods.getPosts();
+    const includeUser = req.query.includeUser == 'true';
+    const posts = await Methods.getPosts(includeUser);
     if (!posts) {
       return res.status(404).send({ error: 'Posts not found' });
     }
@@ -17,8 +18,8 @@ const addNewPost = async (req, res) => {
   try {
     const userId = req.user._id;
     const { comment } = req.body;
-    const created_at = new Date();
-    const post = { userId, comment, created_at };
+    const timestamp = new Date();
+    const post = { userId, comment, timestamp };
 
     await Methods.addPost(post);
     res.status(201).send(post);

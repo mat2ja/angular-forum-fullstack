@@ -3,9 +3,27 @@ const { ObjectId } = require('mongodb');
 
 const Posts = db.collection('posts');
 
-const getPosts = async () => {
+const getPosts = async (includeUser = false) => {
   try {
-    const posts = await Posts.find({}).toArray();
+    let posts = null;
+    if (includeUser) {
+      posts = await Posts.aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+      ]).toArray();
+      posts.forEach(
+        (post) => (post.user = { username: post.user[0].username })
+      );
+      console.log(posts);
+    } else {
+      posts = await Posts.find({}).toArray();
+    }
     return posts;
   } catch (err) {
     throw new Error('Error fetching posts');
@@ -30,6 +48,7 @@ const editPost = async (postId, postData, userId) => {
       },
       { $set: postData }
     );
+    console.log('post :>> ', post);
     return post;
   } catch (err) {
     throw new Error('Error updating post');

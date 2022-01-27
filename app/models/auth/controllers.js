@@ -7,8 +7,6 @@ const login = async (req, res) => {
     const user = await findByCredentials({ username, password });
     const token = await Methods.storeToken(user);
 
-    delete user.password;
-    delete user.tokens;
     res.send({ user, token });
   } catch (err) {
     res.status(500).send({ error: err.message });
@@ -18,18 +16,13 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const { username, password, name, email } = req.body;
-    const created_at = new Date();
     const user = await Methods.addUser({
       username,
       password,
       name,
       email,
-      created_at,
     });
     const token = await Methods.storeToken(user);
-
-    delete user.password;
-    delete user.tokens;
 
     res.status(201).send({ user, token });
   } catch (err) {

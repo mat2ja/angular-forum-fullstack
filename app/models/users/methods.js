@@ -19,7 +19,7 @@ const findByCredentials = async ({ username, password }) => {
   const user = await Users.findOne({ username });
 
   if (!user) {
-    throw new Error('Unable to login');
+    throw new Error('User not found');
   }
 
   const isMatch = await checkHashedPassword(password, user.password);
@@ -27,6 +27,9 @@ const findByCredentials = async ({ username, password }) => {
   if (!isMatch) {
     throw new Error('Incorrect password');
   }
+
+  delete user.password;
+  delete user.tokens;
 
   return user;
 };
@@ -42,7 +45,18 @@ const getUserPosts = async (userId) => {
 
 const listUsers = async () => {
   try {
-    const users = await Users.find().toArray();
+    const users = await db
+      .collection('users')
+      .find(
+        {},
+        {
+          projection: {
+            password: 0,
+            tokens: 0,
+          },
+        }
+      )
+      .toArray();
     return users;
   } catch (err) {
     console.log(err);

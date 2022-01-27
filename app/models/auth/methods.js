@@ -11,6 +11,8 @@ const addUser = async (credentials) => {
 
     await Users.insertOne(credentials);
 
+    delete credentials.password;
+    delete credentials.tokens;
     return credentials;
   } catch (err) {
     console.log(err);
