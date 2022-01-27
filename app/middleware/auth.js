@@ -1,5 +1,5 @@
 const { db } = require('../../db/mongo');
-const { verifyAuthToken } = require('../modules/auth/methods');
+const { verifyAuthToken } = require('../models/auth/methods');
 const Users = db.collection('users');
 const { ObjectId } = require('mongodb');
 

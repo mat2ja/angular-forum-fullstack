@@ -9,7 +9,7 @@ module.exports.getCurrentUser = async (req, res) => {
     delete user.tokens;
     delete user.password;
 
-    if (req.query.posts) {
+    if (req.query.posts == 'true') {
       const posts = await Methods.getUserPosts(user._id);
       user.posts = posts;
       res.send({ ...user, posts });
