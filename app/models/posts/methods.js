@@ -5,9 +5,8 @@ const Posts = db.collection('posts');
 
 const getPosts = async (includeUser = false) => {
   try {
-    let posts = null;
     if (includeUser) {
-      posts = await Posts.aggregate([
+      const posts = await Posts.aggregate([
         {
           $lookup: {
             from: 'users',
@@ -20,11 +19,11 @@ const getPosts = async (includeUser = false) => {
       posts.forEach(
         (post) => (post.user = { username: post.user[0].username })
       );
-      console.log(posts);
+
+      return posts;
     } else {
-      posts = await Posts.find({}).toArray();
+      return await Posts.find({}).toArray();
     }
-    return posts;
   } catch (err) {
     throw new Error('Error fetching posts');
   }
@@ -48,7 +47,6 @@ const editPost = async (postId, postData, userId) => {
       },
       { $set: postData }
     );
-    console.log('post :>> ', post);
     return post;
   } catch (err) {
     throw new Error('Error updating post');

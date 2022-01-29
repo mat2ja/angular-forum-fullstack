@@ -32,7 +32,6 @@ const register = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    console.log(req.user, req.token);
     await Methods.logoutUser(req.user._id, req.token);
     res.send({ message: 'Logged out' });
   } catch (err) {
