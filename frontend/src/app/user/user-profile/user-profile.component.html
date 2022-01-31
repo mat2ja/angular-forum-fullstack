@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-between align-items-baseline">
+  <h1>🏠️ Profile</h1>
+  <button class="btn btn-outline-secondary btn-sm" [routerLink]="['']">
+    Back
+  </button>
+</div>
+
+<div class="profile">
+  <ul class="list-data">
+    <li
+      class="list-data-item"
+      *ngFor="
+        let info of [
+          { label: 'username', value: user.username },
+          { label: 'email', value: user.email },
+          { label: 'name', value: user.name }
+        ]
+      "
+    >
+      <div class="label">{{ info.label }}</div>
+      <div class="value">
+        {{ info.label === "username" ? "@" : "" }}{{ info.value }}
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="posts mt-4">
+  <h6 class="mb-0">
+    Posts by
+    <span class="text-primary font-bold me-1">@{{ user.username }}</span>
+    <span>({{ userPosts?.length || 0 }})</span>
+  </h6>
+  <app-post-item
+    *ngFor="let post of userPosts"
+    [post]="post"
+    [user]="user"
+    (deletedPost)="deletePost($event)"
+    (editedPost)="editPost($event)"
+  ></app-post-item>
+</div>

@@ -1,0 +1,75 @@
+<h1>🧓️ Register</h1>
+<form class="mt-4" [formGroup]="registerForm" (submit)="onRegister()">
+  <div>
+    <div>
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        placeholder="Enter your username"
+        formControlName="username"
+      />
+    </div>
+    <div class="mt-3">
+      <div class="mt-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+      </div>
+      <div class="mt-3">
+        <label for="password-confirm" class="form-label"
+          >Confirm password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="password-confirm"
+          placeholder="Confirm your password"
+          formControlName="passwordConfirm"
+        />
+      </div>
+    </div>
+    <div class="mt-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="name"
+        class="form-control"
+        id="name"
+        placeholder="Enter your name"
+        formControlName="name"
+      />
+    </div>
+    <div class="mt-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="Enter your email"
+        formControlName="email"
+      />
+    </div>
+  </div>
+  <p class="text-danger mt-1" *ngIf="errorMessage">{{ errorMessage }}</p>
+  <div class="mt-3 d-flex justify-content-between">
+    <button
+      type="submit"
+      class="btn btn-success btn-sm"
+      [disabled]="registerForm.invalid"
+    >
+      Register!
+    </button>
+    <button
+      class="btn btn-outline-secondary btn-sm"
+      [routerLink]="['', 'login']"
+    >
+      Back to login
+    </button>
+  </div>
+</form>

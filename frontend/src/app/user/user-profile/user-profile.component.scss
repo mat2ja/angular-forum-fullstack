@@ -1,0 +1,29 @@
+.profile {
+  .list-data {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+  }
+
+  .list-data-item {
+    padding: 1rem;
+    border: 2px solid #eeeeee;
+    border-radius: 6px;
+    background: white;
+  }
+
+  .label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.7em;
+    opacity: 0.8;
+  }
+
+  .value {
+    font-size: 0.95em;
+    word-break: break-all;
+  }
+}

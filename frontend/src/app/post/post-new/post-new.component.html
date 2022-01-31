@@ -1,0 +1,56 @@
+<div class="mt-2 d-flex justify-content-end">
+  <button
+    *ngIf="!formShown"
+    type="button"
+    class="btn btn-primary btn-sm"
+    (click)="formShown = true"
+  >
+    Post something
+  </button>
+  <button
+    *ngIf="formShown"
+    type="button"
+    class="btn btn-outline-warning btn-sm"
+    (click)="formShown = false"
+  >
+    Cancel
+  </button>
+</div>
+<form
+  *ngIf="formShown"
+  name="post-new"
+  (submit)="submitPost($event)"
+  class="mt-3"
+>
+  <div class="input-group mb-2">
+    <span class="input-group-text" id="basic-addon1">@</span>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="User"
+      name="user"
+      [value]="user?.username"
+      disabled
+    />
+  </div>
+  <div class="input-group">
+    <span class="input-group-text">Comment</span>
+    <textarea
+      class="form-control"
+      aria-label="With textarea"
+      [(ngModel)]="comment"
+      name="comment"
+    >
+    </textarea>
+  </div>
+  <footer class="mt-2 d-flex justify-content-end align-items-center">
+    <button
+      type="submit"
+      class="btn"
+      [ngClass]="comment.trim().length > 0 ? 'btn-dark' : ''"
+      [disabled]="!comment.trim().length"
+    >
+      Send
+    </button>
+  </footer>
+</form>

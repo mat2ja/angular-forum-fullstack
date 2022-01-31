@@ -1,0 +1,21 @@
+.user {
+  font-weight: 500;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .timestamp {
+    font-weight: 400;
+    font-size: 14px;
+    opacity: 0.75;
+  }
+}
+
+

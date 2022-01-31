@@ -1,0 +1,53 @@
+<div class="card post" *ngIf="post">
+  <div class="card-header">
+    <p class="user text-primary">@{{ username}}</p>
+    <p class="timestamp text-secondary">
+      {{ formatTimestamp(post.timestamp) }}
+    </p>
+  </div>
+  <div class="card-body">
+    <div class="comment" *ngIf="!editMode">
+      {{ post.comment }}
+    </div>
+    <textarea *ngIf="editMode" [(ngModel)]="editedComment" class="form-control">
+    </textarea>
+  </div>
+  <div class="card-footer d-flex justify-content-end" *ngIf="isCurrentUser && hasControls">
+    <button
+      *ngIf="!editMode"
+      type="button"
+      class="btn btn-dark btn-sm"
+      (click)="setEditMode(true)"
+    >
+      Edit
+    </button>
+    <div
+      class="btn-group btn-group-toggle"
+      data-toggle="edit-buttons"
+      *ngIf="editMode"
+    >
+      <button
+        type="button"
+        class="btn btn-success btn-sm"
+        (click)="editPost()"
+        [disabled]="editedComment === post.comment"
+      >
+        Confirm
+      </button>
+      <button
+        type="button"
+        class="btn btn-warning btn-sm"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
+    <button
+      type="button"
+      class="btn btn-danger btn-sm ms-2"
+      (click)="deletePost()"
+    >
+      Delete
+    </button>
+  </div>
+</div>

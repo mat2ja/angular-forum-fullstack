@@ -1,0 +1,41 @@
+<div class="mb-4 d-flex justify-content-end" *ngIf="!authenticated">
+  <a class="btn btn-primary btn-sm" [routerLink]="['login']">Login</a>
+  <a class="btn btn-outline-secondary btn-sm ms-1" [routerLink]="['register']">
+    Register
+  </a>
+</div>
+
+<div
+  class="d-flex justify-content-between align-items-start mb-4"
+  *ngIf="authenticated && user"
+>
+  <p>
+    👋️ Welcome
+    <a [routerLink]="['profile']" class="text-primary user-name">{{
+      user.name
+    }}</a>
+    <span class="ms-1 text-secondary" class="ms-1 text-secondary user-email">
+      ({{ user.email }})
+    </span>
+  </p>
+  <div *ngIf="authenticated" class="d-flex justify-content-end w-full">
+    <button class="btn btn-outline-secondary btn-sm" (click)="logout()">
+      Logout
+    </button>
+  </div>
+</div>
+
+<h2 class="mb-3">🦜️ Posts ({{ posts.length }}):</h2>
+<section class="posts">
+  <app-post-item
+    *ngFor="let post of posts"
+    [post]="post"
+    (deletedPost)="deletePost($event)"
+    (editedPost)="editPost($event)"
+    [hasControls]="true"
+  ></app-post-item>
+  <app-post-new
+    *ngIf="authenticated"
+    (addedPost)="addPost($event)"
+  ></app-post-new>
+</section>

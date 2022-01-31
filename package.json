@@ -8,7 +8,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Matija Osrečki",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^14.3.2",
