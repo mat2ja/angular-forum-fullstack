@@ -1,7 +1,5 @@
 ## Angular / Node / Express / Mongodb full stack forum app
 
-Contains built Angular app (minified) and complete backend
-
 Create an .env file & fill it out
 
 ```env
@@ -14,4 +12,4 @@ JWT_SECRET=pick-a-secret
 
 ```npm run dev```
 
-```localhost:8081```
+```localhost:8080```
