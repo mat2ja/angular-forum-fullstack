@@ -8,3 +8,8 @@ DB_URL=mongodb://localhost:27017
 DB_NAME=pick-a-name
 JWT_SECRET=pick-a-secret
 ```
+
+
+```npm run dev```
+
+```localhost:8081```
